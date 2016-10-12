@@ -1,0 +1,20 @@
+mergebase:
+	./dictionaryconverter merge
+
+mergemodules:
+	./dictionaryconverter -m negotiate merge
+	./dictionaryconverter -m multiauth merge
+	./dictionaryconverter -m memcacheMonitor merge
+	./dictionaryconverter -m preprodwarning merge
+	./dictionaryconverter -m discopower merge
+	./dictionaryconverter -m core merge
+	./dictionaryconverter -m saml merge
+	./dictionaryconverter -m consentAdmin merge
+	./dictionaryconverter -m cron merge
+	./dictionaryconverter -m consent merge
+	./dictionaryconverter -m authorize merge
+	./dictionaryconverter -m authX509 merge
+	./dictionaryconverter -m authYubiKey merge
+	./dictionaryconverter -m expirycheck merge
+
+mergeall: mergebase mergemodules
