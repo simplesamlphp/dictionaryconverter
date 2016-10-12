@@ -6,11 +6,14 @@ import os.path
 import argparse
 from pprint import pprint
 import sys
+from collections import Counter, namedtuple
 
 from babel.messages.catalog import Catalog
 from babel.messages import pofile
 from babel.core import UnknownLocaleError
 from babel.util import LOCALTZ
+
+Stat = namedtuple('Stat', ['count', 'percentage'])
 
 DEFAULT_CATALOG_HEADERS = {
     'header_comment': (u''),
@@ -51,6 +54,9 @@ def make_parser():
     extract_parser = subparsers.add_parser('extract', help='Extract tags to other domains')
     extract_parser.add_argument('dictionary')
     extract_parser.add_argument('tags', action='append', help='TAGs to extract')
+
+    stats_parser = subparsers.add_parser('stats', help='Show statistics')
+    stats_parser.add_argument('-c', '--csv', action='store_true')
 
     return parser
 
@@ -237,6 +243,32 @@ def build_headers(headerlist):
     return headers
 
 
+def build_stats_for_dictionary(dictionary):
+    num_msgids = len(dictionary)
+    msgid_per_lang = Counter()
+    for translations in dictionary.values():
+        msgid_per_lang.update(translations.keys())
+    result = {}
+    for lang, count in msgid_per_lang.items():
+        result[lang] = Stat(count, count/num_msgids*100)
+    return result
+
+
+def pprint_stats(stats, prefix='', template=''):
+    if not template:
+        template = '{prefix}{key}: {percentage}'
+    keys = sorted(stats.keys())
+    prefix = prefix + ':' if prefix else ''
+    for key in keys:
+        kwargs = {
+            'prefix': prefix,
+            'key': key,
+            'percentage': stats[key].percentage/100,
+            'count': stats[key].count,
+        }
+        print(template.format(**kwargs))
+
+
 if __name__ == '__main__':
     parser = make_parser()
     args = parser.parse_args()
@@ -266,6 +298,13 @@ if __name__ == '__main__':
         parser.print_usage()
         sys.exit(1)
 
+    if command == 'stats':
+        d = merge_dictionaries_in_dir(dictpath, module=module or None, verbose=verbose)
+        template = ''
+        if args.csv:
+            template = '{prefix}{key},{percentage:.1%},{count}'
+        pprint_stats(build_stats_for_dictionary(d), namespace or module or 'base', template)
+        sys.exit(0)
     if command == 'extract':
         domain = 'extracted'
         tags = []

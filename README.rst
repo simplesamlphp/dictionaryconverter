@@ -17,7 +17,9 @@ default for a module is ``modulename.po``. This can be overridden with the
 The command ``merge`` merges all dictionaries in a directory into one .po-file,
 while the command ``convert`` converts a single dictionary. The command
 ``extract`` can copy out one or more tags from a dictionary into a file
-``extracted.po`` if you need to move some tags from one domain to another.
+``extracted.po`` if you need to move some tags from one domain to another. The
+command ``stats`` will behave like a merge, but instead of saving a .po-file it
+will print out some statistics about the merged dictionaries.
 
 Also included is a makefile that will convert all the dictionaries included
 with the SimpleSAMLphp source. One for all base dictionaries, one each for all

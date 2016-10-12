@@ -1,0 +1,29 @@
+statsall: clean statsbase statsmodules sortstats
+
+clean:
+	rm dictionary-*.txt
+
+statsfile:
+	touch dictionary-stats.txt
+
+sortstats:
+	sort -u dictionary-stats.txt > dictionary-stats.sorted.txt
+
+statsbase: statsfile
+	./dictionaryconverter stats  -c >> dictionary-stats.txt
+
+statsmodules: statsfile
+	./dictionaryconverter -m negotiate stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m multiauth stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m memcacheMonitor stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m preprodwarning stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m discopower stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m core stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m saml stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m consentAdmin stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m cron stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m consent stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m authorize stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m authX509 stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m authYubiKey stats  -c >> dictionary-stats.txt
+	./dictionaryconverter -m expirycheck stats  -c >> dictionary-stats.txt
