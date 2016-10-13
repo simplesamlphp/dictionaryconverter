@@ -35,11 +35,11 @@ MODULEDIR = 'modules'
 
 def make_parser():
     parser = argparse.ArgumentParser(description='Convert SSP translation dictionaries into gettext .po-files')
-    parser.add_argument('-D', '--domain')
-    parser.add_argument('-l', '--localedir')
-    parser.add_argument('-m', '--module')
-    parser.add_argument('-v', '--verbose', action='store_true')
+    parser.add_argument('-D', '--domain', help='Alternative domain name to use')
+    parser.add_argument('-l', '--localedir', help='Root of the tree where to save the .po-files. Default: "locales"')
+    parser.add_argument('-m', '--module', help='The name of a single module')
     parser.add_argument('-H', '--header', action='append', help='One or more headers in the format "key=value" to build up the mime-block in the first entry. For instance: -H "version=2"')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Be verbose')
 
     subparsers = parser.add_subparsers(help='commands', dest='command')
 
@@ -56,7 +56,7 @@ def make_parser():
     extract_parser.add_argument('tags', action='append', help='TAGs to extract')
 
     stats_parser = subparsers.add_parser('stats', help='Show statistics')
-    stats_parser.add_argument('-c', '--csv', action='store_true')
+    stats_parser.add_argument('-c', '--csv', action='store_true', help='Use CSV-format. Separator is a comma.')
 
     return parser
 
