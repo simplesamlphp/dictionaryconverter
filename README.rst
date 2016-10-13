@@ -37,6 +37,9 @@ file will be updated, not overwritten.
 
 Run it with the ``-h`` flag for more options.
 
+Note: all changes to the data are done before the .po-file is written. This
+script cannot be used to rename or delete existing entries in a .po-file.
+
 Examples
 --------
 
