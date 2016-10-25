@@ -27,6 +27,7 @@ DEFAULT_CATALOG_HEADERS = {
 LOCALENAME_MAP = {
     'pt-br': 'pt_BR',
     'zh-tw': 'zh_TW',
+    'no': 'nb',
 }
 
 DEFAULT_LOCALEDIR = 'locales'
