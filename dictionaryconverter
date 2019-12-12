@@ -331,7 +331,7 @@ if __name__ == '__main__':
         if verbose:
             print('Converting "{}@{}"'.format(dictionary, dictpath))
     elif command == 'merge':
-        d = merge_dictionaries_in_dir(dictpath, module=module or None, verbose=verbose)
+        d = merge_dictionaries_in_dir(dictpath, module=module or None, include=args.include or None, exclude = args.exclude or None, verbose=verbose)
     else:
         sys.exit()
     if args.stringify:
